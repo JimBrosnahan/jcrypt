@@ -15,17 +15,36 @@ plugins {
     id 'eclipse'
 }
 
+version = "1.0.0"
+
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    mavenCentral()    
 }
 
 dependencies {
-
-}
+    implementation 'commons-io:commons-io:2.6'}
 
 application {
     // Define the main class for the application.
     mainClassName = 'jcrypt.Jcrypt'
+}
+
+task uberJar(type: Jar) {
+    archiveClassifier = 'uber'
+
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+
+    manifest {
+        attributes(
+                "Main-Class": "jcrypt.Jcrypt"
+        )
+    }
 }

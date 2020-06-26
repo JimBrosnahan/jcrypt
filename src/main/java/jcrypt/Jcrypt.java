@@ -33,7 +33,7 @@ public class Jcrypt {
             
         } else {
                 System.out.println("e|d <input> <output>");
-                System.exit(1);
+                System.exit(0);
             }
 
 
